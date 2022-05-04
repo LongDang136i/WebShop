@@ -1,0 +1,181 @@
+﻿@model WebShop.Models.RegisterModel
+
+@{
+    ViewBag.Title = "Đăng kí";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- Custom fonts for this template-->
+<link href="/Assets/Admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet">
+
+<!-- Custom styles for this template-->
+<link href="/Assets/Admin/css/sb-admin-2.min.css" rel="stylesheet">
+
+<div class="container">
+
+    @using (Html.BeginForm("Register", "Client", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    
+                    <div class="col-lg-7"style=" margin: 0 auto; " >
+                        <div class="p-5" style="width:455px; margin: 0 auto; ">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Tạo tài khoản!</h1>
+                                @if (ViewBag.Success != null)
+                                {
+                                    <div class="alert alert-success">
+                                        @ViewBag.Success
+                                    </div>
+                                }
+                            </div>
+                            <form class="user">
+                                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control form-control-user", @autofocus = "autofocus", @placeholder = "Tên đăng nhập" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control form-control-user", @placeholder = "Mật khẩu" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.PasswordFor(model => model.ConfimPassword, new { @class = "form-control form-control-user", @placeholder = "Xác nhận mật khẩu" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control form-control-user", @placeholder = "Họ tên" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control form-control-user", @placeholder = "Địa chỉ" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control form-control-user", @placeholder = "Email" })
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control form-control-user", @placeholder = "Số điện thoại" })
+                                </div>
+
+                                <button type="submit" class="btn btn-primary btn-user btn-block">
+                                    Đăng kí
+                                </button>
+                                <hr>
+                                <a href="index.html" class="btn btn-google btn-user btn-block">
+                                    <i class="fab fa-google fa-fw"></i> Đăng kí bằng Google
+                                </a>
+                                <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                    <i class="fab fa-facebook-f fa-fw"></i> Đăng kí bằng Facebook
+                                </a>
+                            </form>
+                            <hr>
+                            <div class="text-center">
+                                <a class="small" href="forgot-password.html">Quên mật khẩu?</a>
+                            </div>
+                            <div class="text-center">
+                                <a class="small" href="dang-nhap">Đăng nhập</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        @*<div class="form-horizontal">
+            <h4>Đăng kí thành viên</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @if (ViewBag.Success != null)
+            {
+                <div class="alert alert-success">
+                    @ViewBag.Success
+                </div>
+            }
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ConfimPassword, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.PasswordFor(model => model.ConfimPassword, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ConfimPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Đăng kí" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+
+
+
+
+
+    }
+</div>
+<!-- Bootstrap core JavaScript-->
+<script src="/Assets/Admin/vendor/jquery/jquery.min.js"></script>
+<script src="/Assets/Admin/vendor/bootstrap/js/bootstrap.bundle.min.js"></script> <!-- Core plugin JavaScript-->
+<script src="/Assets/Admin/vendor/jquery-easing/jquery.easing.min.js"></script> <!-- Custom scripts for all pages-->
+<script src="/Assets/Admin/js/sb-admin-2.min.js"></script>
+
+

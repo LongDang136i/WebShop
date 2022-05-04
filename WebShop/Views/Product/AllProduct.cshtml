@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "AllProduct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var listProducts = (List<Model.EF.Product>)ViewBag.AllProduct;
+}
+
+
+@model Model.EF.Category
+<div class="main">
+
+    <div class="content" style="min-height: 500px;">
+        <div class="content_top">
+            <div class="heading">
+                <h3 style="font-family:Arial;">Tất cả sản phẩm</h3>
+            </div>
+
+            <div class="clear"></div>
+        </div>
+
+        <div class="section group" style="position:relative">
+
+            <div class="section group" style="width:75%;float:left;">
+                @foreach (var item in listProducts)
+                {
+                    var url = "/chi-tiet/" + item.MetaTitle + "-" + item.ID;
+                    <div class="grid_1_of_3 images_1_of_3">
+                        <a href="@url"><img src="@item.Image" alt="@item.ProductName" style="border:0px; margin: 0 auto;" /></a>
+                        <h3>@item.ProductName </h3>
+                        <div class="price-details">
+                            <div class="price-number">
+                                <p><span class="rupees">@(item.Price.HasValue ? item.Price.Value.ToString("N0") + "Đ" : "Liên hệ")</span></p>
+                            </div>
+                            <div class="add-cart">
+                                <h4><a href="/them-gio-hang?productID=@item.ID&quantity=1">Thêm vào giỏ</a></h4>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+
+            <div class="rightsidebar span_3_of_1" style=" width 23%; position:absolute;right:-30px;">
+                <h2 style="font-family:Arial;">Danh mục</h2>
+                <ul class="side-w3ls">
+                    @{Html.RenderAction("CategoryList", "Category");}
+                </ul>
+            </div>
+        </div>
+
+        <div style="margin-top: 20px; margin-left:600px;">
+
+
+
+            @if (ViewBag.TotalPage > 1)
+            {
+                var pageDisplay = (int)ViewBag.Maxpage;
+                var totalPage = (int)ViewBag.TotalPage;
+                var currentPage = (int)ViewBag.Page;
+
+                var startPageIndex = Math.Max(1, currentPage - pageDisplay / 2);
+                var endPageIndex = Math.Min(totalPage, currentPage + pageDisplay / 2);
+
+                var link = "/tat-ca-san-pham/";
+                <style>
+                    #pagenum {
+                        display: inline-block;
+                        font-size: 20px;
+                        height: 25px;
+                        width: 30px;
+                        text-decoration: none;
+                        color: #808080;
+                        text-align: center;
+                        background: #fbeaef;
+                    }
+
+                    #currentPage {
+                        display: inline-block;
+                        font-size: 20px;
+                        height: 25px;
+                        width: 30px;
+                        text-decoration: none;
+                        text-align: center;
+                        background: #cef9bf;
+                        color: #808080;
+                    }
+                </style>
+                
+                if (currentPage > 1)
+                {
+                <a href="@link?page=@ViewBag.First" title="Trang đầu" id="pagenum">|<</a>
+                <a href="@link?page=@ViewBag.Prev" title="Trang trước" id="pagenum"><<</a>
+
+                }
+
+
+                for (int i = startPageIndex; i <= endPageIndex; i++)
+                {
+                    if (currentPage == i)
+                    {
+                    <a href="@link?page=@i" id="currentPage">@i</a>
+                    }
+                    else
+                    {
+                    <a href="@link?page=@i" id="pagenum">@i</a>
+                    }
+                }
+
+
+                if (currentPage < totalPage)
+                {
+                <a href="@link?page=@ViewBag.Next" title="Trang sau" id="pagenum">>></a>
+                <a href="@link?page=@ViewBag.Last" title="Trang cuối" id="pagenum">>|</a>
+
+                }
+                
+                
+            }
+            else
+            {
+                <span>Không có sản phẩm nào</span>
+            }
+        </div>
+    </div>
+
+</div>
+

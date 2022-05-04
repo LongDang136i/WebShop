@@ -1,0 +1,30 @@
+﻿
+@model List<Model.EF.Menu>
+<div class="call">
+    <p><span>Bạn cần tư vấn?</span> Gọi ngay đến đường dây nóng <span class="number">1223456789</span></span></p>
+</div>
+<div class="account_desc">
+    @{
+        var session = (WebShop.Common.ClientLogin)Session[WebShop.Common.CommonConstants.CLIENT_SESSION];
+    }
+    
+        @if (session == null)
+        {
+            <ul>
+                @foreach (var item in Model)
+                {
+                    <li><a href="@item.Link" target="@item.Target">@item.Name</a></li>
+
+                }
+            </ul>
+        }
+        else
+        {
+            <ul>
+                <li>Xin chào: @session.Name</li>
+            </ul>
+        }
+
+
+</div>
+<div class="clear"></div>

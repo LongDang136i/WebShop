@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@model PagedList.IPagedList<Model.EF.Order>
+@using PagedList.Mvc
+@section header{Quản lý đơn hàng}
+
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+
+            @using (Html.BeginForm("Index", "Order", FormMethod.Get))
+            {
+                <h5 class="m-0 font-weight-bold text-primary" style="width:500px;float:left;margin-top:15px">Bảng thông tin đơn hàng</h5>
+                <div class="row" style="margin-right: 30px;  float: right;">
+                    <input type="text" value="@ViewBag.SearchString" name="searchString" />
+
+                    <button type="submit" class="btn btn-primary btn-user btn-block" style="width:100px;margin-left:20px">Tìm kiếm</button>
+
+                </div>
+            }
+        </div>
+
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số điện thoại</th>
+                            <th>Địa chỉ</th>
+                            <th>Email</th>
+                            <th>Ngày mua</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr id="row_@item.ID">
+                                    <td>@item.ID</td>
+                                    <td>@item.ShipName</td>
+                                    <td>@item.ShipMobile</td>
+                                    <td>@item.ShipAddress</td>
+                                    <td>@item.ShipEmail</td>
+                                    <td>@item.CreateDate</td>
+                                    <td>
+                                        <a href="#">Chi tiết</a>
+                                        
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                @Html.PagedListPager(Model, page => Url.Action("Index", new { page, @seachString = ViewBag.SearchString }))
+            </div>
+        </div>
+    </div>
+
+</div>
